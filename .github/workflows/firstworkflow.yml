@@ -7,20 +7,21 @@ on:
 
 jobs:
   build:
-    name: Build jobs
+    name: Build job
     runs-on: ubuntu-latest
     steps:
       - name: checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Display runner info
         run: |
-          echo " Runner os: $RUNNER_OS"
-          echo "Runner Arch: $RUNNER_ARCH"
+          echo "Runner os: $RUNNER_OS"
+          echo "Runner Atch: $RUNNER_ARCH"
           echo "workspace: $GITHUB_WORKSPACE"
           echo "Repository: $GITHUB_REPOSITORY"
           echo "Event: $GITHUB_EVENT_NAME"
           echo "SHA: $GITHUB_SHA"
+
       - name: List installed tools
         run: |
           echo "=== Java ==="
@@ -31,3 +32,13 @@ jobs:
           python3 --version || echo 'Not installed'
           echo "=== Docker ==="
           docker --version || echo 'Not installed'
+
+  test:
+    name: Test Job
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Run Mock test
+        run: |
+          echo "Running unit test"
+          echo "all tests passes"
